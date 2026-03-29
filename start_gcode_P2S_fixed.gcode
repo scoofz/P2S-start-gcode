@@ -46,7 +46,7 @@ M1006 W
   M73.2   R1.0 ;Reset left time magnitude
   G29.1 Z{+0.0} ; clear z-trim value first
   M983.1 M1
-  M975 S1 ; [FIX] enable input shaping immediately so M982.2 is effective
+  M975 S1 ; enable input shaping immediately so M982.2 is effective
   M982.2 S1 ; turn on cog noise reduction
   M983.4 S0
 ;===== reset machine status =================
@@ -288,7 +288,7 @@ M620.10 A1 F{flush_volumetric_speeds[initial_no_support_extruder]/2.4053*60} H{n
     G28
   M623
   G29.2 S1
-  ; [FIX] Removed unconditional G28 here — caused a full XYZ rehome after every bed leveling
+  ; removed unconditional G28 -- caused a full XYZ rehome after every bed leveling
 ;===== bed leveling end ================================
 
   M985.1 U0 E2
