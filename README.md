@@ -2,6 +2,9 @@
 
 A cleaned-up and fixed version of the stock Bambu Lab **P1S / P2S** start g-code (BambuStudio, 2026-02-26 revision), addressing two annoying stock behaviors: redundant homing cycles and delayed motor noise reduction.
 
+However, keep in in mind that the Bambu P2S firmware's internal G28 macro always performs a triple X+Y homing cycle regardless of axis specified. This is hardcoded in the firmware and cannot be fixed from the start g-code. This fix removes one unnecessary G28 call (the unconditional one after bed leveling), reducing the total from 4 to 3 full homing cycles. A full resolution would require a firmware-level fix from Bambu.
+
+
 ---
 
 ## What's wrong with the stock start g-code?
