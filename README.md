@@ -54,9 +54,10 @@ M983.4 S0
 1. In **BambuStudio**, go to **Printer Settings → Machine G-code → Machine start G-code**
 2. Select all and delete the existing content
 3. Paste the contents of `start_gcode_P2S_fixed.gcode`
-4. Save your printer profile
+4. Save your profile to a new P2S profile, Bambu Studio doesn't allow to override the starting gcode under the original profile. 
+5. Remember to select it before starting a print. 
 
-> **Note:** This was written and tested against the `2026-02-26` revision of the stock P2S start g-code. If Bambu pushes a firmware/slicer update that changes the stock g-code, review the diff before applying.
+> **Note:** This was written and tested against the `2026-02-26` revision of the stock P2S start g-code. 
 
 ---
 
