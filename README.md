@@ -72,6 +72,12 @@ M983.4 S0
 
 ---
 
+## Keep in mind
+
+This start gcode is based on the version 2026-02-26, some minor differences can occur with your own firmware revision, which doesn't affect the print quality.
+
+---
+
 ## Contributing
 
 Spotted another quirk in the startup sequence? PRs and issues welcome.
