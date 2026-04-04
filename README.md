@@ -1,4 +1,4 @@
-# Bambu Lab P2S — Optimized Start G-code
+# Bambu Lab P2S â Optimized Start G-code
 
 A cleaned-up and fixed version of the stock Bambu Lab **P1S / P2S** start g-code (BambuStudio, 2026-02-26 revision), addressing two annoying stock behaviors: redundant homing cycles and delayed motor noise reduction.
 
@@ -8,7 +8,7 @@ A cleaned-up and fixed version of the stock Bambu Lab **P1S / P2S** start g-code
 
 ## What's wrong with the stock start g-code?
 
-### Bug 1 — Unnecessary full XYZ rehome after bed leveling
+### Bug 1 â Unnecessary full XYZ rehome after bed leveling
 
 In the stock sequence, a bare `G28` sits **unconditionally** right after the bed leveling block, outside any conditional (`M622`/`M623`) guard:
 
@@ -20,13 +20,13 @@ G29.2 S1
 G28         ; BUG: runs unconditionally, every single print
 ```
 
-This means the printer performs a full XYZ homing every time, regardless of whether bed leveling was done or not — in addition to the initial homing already performed earlier in the sequence.
+This means the printer performs a full XYZ homing every time, regardless of whether bed leveling was done or not â in addition to the initial homing already performed earlier in the sequence.
 
 **Fix:** The unconditional `G28` is removed. The `G28` inside the `M622 J0` block (no-ABL path) is left intact, as it is intentional and correct.
 
 ---
 
-### Bug 2 — Motor noise reduction activated too early to be effective
+### Bug 2 â Motor noise reduction activated too early to be effective
 
 The stock sequence calls `M982.2 S1` (cog noise reduction) **before** `M975 S1` (input shaping) in the machine reset section:
 
@@ -53,10 +53,10 @@ M983.4 S0
 
 ## How to use
 
-1. In **BambuStudio**, go to **Printer Settings → Machine G-code → Machine start G-code**
+1. In **BambuStudio**, go to **Printer Settings â Machine G-code â Machine start G-code**
 2. Select all and delete the existing content
 3. Paste the contents of `start_gcode_P2S_fixed.gcode`
-4. Save your profile to a new P2S profile — Bambu Studio doesn't allow overriding the start g-code on the original profile
+4. Save your profile to a new P2S profile â Bambu Studio doesn't allow overriding the start g-code on the original profile
 5. Remember to select it before starting a print
 
 > **Note:** This was written and tested against the `2026-02-26` revision of the stock P2S start g-code. If Bambu pushes a firmware/slicer update that changes the stock g-code, review the diff before applying.
@@ -66,18 +66,24 @@ M983.4 S0
 ## Compatibility
 
 - Bambu Lab **P2S** (primary target)
-- Likely compatible with **P1S** — the g-code structure is nearly identical, but use at your own risk
+- Likely compatible with **P1S** â the g-code structure is nearly identical, but use at your own risk
 - BambuStudio / Orca Slicer
 
 > This start g-code is based on the version 2026-02-26. Minor differences may occur with other firmware revisions, but these do not affect print quality.
 
 ---
 
+## Real-world validation
+
+The noise reduction fix (Bug 2) has been confirmed in real-world testing: running a print with the **stock g-code** is audibly noisier than with the fixed version. The `M982.2 S1` command has **zero effect** when `M975 S1` (input shaping) has not been activated first — the cog noise reduction is completely inactive throughout the stock startup sequence.
+
+---
+
 ## Related projects
 
-- **[bambu-p2s-gcode-annotated](https://github.com/shrx/bambu-p2s-gcode-annotated)** by shrx — Line-by-line annotated documentation of the complete P2S start g-code. Every Bambu-proprietary command explained, unknowns clearly marked. Essential reference if you want to understand what the startup sequence is actually doing.
+- **[bambu-p2s-gcode-annotated](https://github.com/shrx/bambu-p2s-gcode-annotated)** by shrx â Line-by-line annotated documentation of the complete P2S start g-code. Every Bambu-proprietary command explained, unknowns clearly marked. Essential reference if you want to understand what the startup sequence is actually doing.
 
-- **[P2S quirks and firmware settings](https://old.reddit.com/r/BambuLab/comments/1s8kneu/p2s_quirks_and_poorly_optimized_firmware_settings/)** — Reddit post summarizing the stock settings inconsistencies (travel acceleration, volumetric flow limits, Sport/Ludicrous mode limitations).
+- **[P2S quirks and firmware settings](https://old.reddit.com/r/BambuLab/comments/1s8kneu/p2s_quirks_and_poorly_optimized_firmware_settings/)** â Reddit post summarizing the stock settings inconsistencies (travel acceleration, volumetric flow limits, Sport/Ludicrous mode limitations).
 
 ---
 
