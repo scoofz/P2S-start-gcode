@@ -285,10 +285,10 @@ M620.10 A1 F{flush_volumetric_speeds[initial_no_support_extruder]/2.4053*60} H{n
   M623
 
   M622 J0
-    G28
+    ; skip to homing
   M623
   G29.2 S1
-  ; removed unconditional G28 -- caused a full XYZ rehome after every bed leveling
+  G28 ; home after leveling block (or after skipping it)
 ;===== bed leveling end ================================
 
   M985.1 U0 E2
